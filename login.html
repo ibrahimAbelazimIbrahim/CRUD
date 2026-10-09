@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="input-group">
+      <label for="email">البريد الألكتروني</label>
+      <input type="email" id="email" placeholder="ادخل البريد الألكتروني" />
+    </div>
+
+    <div class="input-group">
+      <label for="password">كلمه المرور</label>
+      <input type="password" id="password" placeholder="ادخل كلمه السر " />
+    </div>
+
+    <button id="btn-login">الدخول</button>
+
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- اعدادت الاتصال   -->
+    <script src="config.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>

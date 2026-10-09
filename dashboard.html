@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة التحكم</title>
+  </head>
+
+  <body>
+    <h1>لوحة التحكم</h1>
+    <h2 id="welcome-msg">مرحبا بك</h2>
+
+    <div class="user-card" id="view-section">
+      <p>
+        <strong>الأسم </strong><span id="user-name">.... جاري التحميل</span>
+      </p>
+      <p>
+        <strong>البريد الألكتروني </strong
+        ><span id="user-email">.... جاري التحميل</span>
+      </p>
+      <p><strong>العمر </strong><span id="user-age">.... جاري التحميل</span></p>
+      <p>
+        <strong>رقم الهاتف </strong
+        ><span id="user-phone">.... جاري التحميل</span>
+      </p>
+
+      <button id="btn-logout">تسجيل الخروج</button>
+      <button id="btn-edit">تعديل البيانات</button>
+
+      <button id="btn-delete" style="color:red; margin-right: 15px">حذف الحساب</button>
+
+
+    </div>
+
+    <!-- بيانات مخفيه افتراضيا -->
+    <div id="edit-section" style="display: none">
+      <h3>تعديل البيانات الشخصية</h3>
+
+      <div>
+        <label for="edit-name">الأسم</label>
+        <input type="text" id="edit-name" />
+      </div>
+
+      <div>
+        <label for="edit-age">العمر</label>
+        <input type="number" id="edit-age" />
+      </div>
+
+      <div>
+        <label for="edit-phone">رقم الهاتف</label>
+        <input type="text" id="edit-phone" />
+      </div>
+
+      <button id="btn-save">حفظ التعديلات</button>
+      <button id="btn-cancel">إلغاء</button>
+    </div>
+
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- اعدادت الاتصال   -->
+    <script src="config.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
