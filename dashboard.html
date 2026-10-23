@@ -27,9 +27,9 @@
       <button id="btn-logout">تسجيل الخروج</button>
       <button id="btn-edit">تعديل البيانات</button>
 
-      <button id="btn-delete" style="color:red; margin-right: 15px">حذف الحساب</button>
-
-
+      <button id="btn-delete" style="color: red; margin-right: 15px">
+        حذف الحساب
+      </button>
     </div>
 
     <!-- بيانات مخفيه افتراضيا -->
@@ -53,6 +53,20 @@
 
       <button id="btn-save">حفظ التعديلات</button>
       <button id="btn-cancel">إلغاء</button>
+    </div>
+
+    <!-- notes -->
+    <div id="notes-section">
+      <h3>ملاحظاتي</h3>
+
+      <!-- اضافه ملاحظه جديد -->
+      <input type="text" id="note-input" placeholder="اكتب ملاحظتك" />
+      <button id="btn-add-note">إضافة</button>
+
+      <!-- هنا تظهر للمستخدم كل الملاحظات -->
+      <ul id="notes-list">
+        <!-- سيتم اضافة الملاحظات بالجافا سكربت -->
+      </ul>
     </div>
 
     <!-- مكتبة Supabase -->

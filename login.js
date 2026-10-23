@@ -32,3 +32,7 @@ async function loginUser() {
   alert("تم تسجيل الدخول");
   window.location.href = "dashboard.html";
 }
+
+
+
+// ';DROP TABLE users; --

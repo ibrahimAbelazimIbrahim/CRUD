@@ -1,9 +1,13 @@
+// المتغيرات
 const welcomeMsg = document.getElementById("welcome-msg");
 const userName = document.getElementById("user-name");
 const userEmail = document.getElementById("user-email");
 const userAge = document.getElementById("user-age");
 const userPhone = document.getElementById("user-phone");
 const LogoutBtn = document.getElementById("btn-logout");
+// notes var
+const noteInput = document.getElementById("note-input");
+const notesList = document.getElementById("notes-list");
 
 // اقسام الصفحة
 const viewSection = document.getElementById("view-section");
@@ -17,6 +21,8 @@ const editBtn = document.getElementById("btn-edit");
 const saveBtn = document.getElementById("btn-save");
 const cancelBtn = document.getElementById("btn-cancel");
 const deleteBtn = document.getElementById("btn-delete");
+// notes var
+const addNoteBtn = document.getElementById("btn-add-note");
 
 // تخزين بيانات المستخدم الحالية
 let currentUser = null;
@@ -24,10 +30,11 @@ let currentUserId = null;
 
 //Event Listeners
 editBtn.addEventListener("click", openEditMode);
-// cancelBtn.addEventListener("click", cancelEditMode);
-// saveBtn.addEventListener("click", updateUserData);
-// deleteBtn.addEventListener("click", deleteUser);
+cancelBtn.addEventListener("click", cancelEditMode);
+saveBtn.addEventListener("click", updateUserData);
+deleteBtn.addEventListener("click", deleteUser);
 LogoutBtn.addEventListener("click", logout);
+addNoteBtn.addEventListener("click", addNote);
 
 initDashboard();
 
@@ -91,4 +98,92 @@ function openEditMode() {
 
   viewSection.style.display = "none";
   editSection.style.display = "block";
+}
+
+function cancelEditMode() {
+  editSection.style.display = "none";
+  viewSection.style.display = "block";
+}
+
+async function updateUserData() {
+  const newName = editName.value.trim();
+  const newAge = editAge.value.trim();
+  const newPhone = editPhone.value.trim();
+
+  if (newName === "" || newAge === "" || newPhone === "") {
+    alert("ادخل البيانات كامله");
+    return;
+  }
+  // updata data in db
+
+  const { erroe } = await supabaseClient
+    .from("users")
+    .update({
+      name: newName,
+      age: newAge,
+      phone: newPhone,
+    })
+    .eq("userId", currentUserId);
+
+  if (erroe) {
+    // message for dev
+    alert("فشل التحديث" + erroe.message);
+    return;
+  }
+
+  alert("تم تحديث البيانات");
+
+  await loadUserData(currentUserId);
+  cancelEditMode();
+}
+
+//.update({name: "ali",age:"ahmed",phone: 0102538852,})
+
+async function deleteUser() {
+  const confirmed = confirm("هل تريد حزف الحساب نهائيا ؟");
+  if (!confirmed) return;
+
+  const { error } = await supabaseClient
+    .from("users")
+    .delete()
+    .eq("userId", currentUserId);
+
+  if (error) {
+    alert("فشل الحزف" + error.message);
+  }
+
+  localStorage.removeItem("userId");
+  alert("تم حزف الحساب");
+  window.location.href = "index.html";
+}
+
+async function addNote() {
+  const content = noteInput.value.trim();
+
+  if (content === "") {
+    alert("اكتب ملاحظتك اولا");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("notes")
+    .insert([
+      {
+        userId: currentUserId,
+        content: content,
+      },
+    ])
+    .select(); // ترجع الid
+
+  if (error) {
+    alert("فشل الاضافه" + error.message);
+    return;
+  }
+
+  noteInput.value = "";
+
+  alert("تم اضافة الملاحظات بنجاح");
+
+  // ul   اضافة الملاحظات الى
+  // renderNote(data[0])
 }
