@@ -42,6 +42,7 @@ async function initDashboard() {
   currentUserId = checkLogin();
   if (currentUserId) {
     await loadUserData(currentUserId);
+    await loadNotes(currentUserId);
   }
 }
 
@@ -185,5 +186,53 @@ async function addNote() {
   alert("تم اضافة الملاحظات بنجاح");
 
   // ul   اضافة الملاحظات الى
-  // renderNote(data[0])
+  renderNote(data[0]);
 }
+
+function renderNote(note) {
+  const li = document.createElement("li");
+  li.style.marginBottom = "10px";
+  // عرض الملاحظه
+  const span = document.createElement("span");
+  span.textContent = note.content + " ";
+
+  // زر التعديل
+  const editNoteBtn = document.createElement("button");
+  editNoteBtn.textContent = "تعديل";
+  editNoteBtn.onclick = function () {
+    updateNote(note.id, span); // id هنمرر الملاحظه بناء على ال
+  };
+
+  // حزف الملاحظه
+  const deleteNoteBtn = document.createElement("button");
+  deleteNoteBtn.textContent = "حذف";
+  deleteNoteBtn.style.color = "red";
+  deleteNoteBtn.style.marginRight = "5px";
+  deleteNoteBtn.onclick = function () {
+    deleteNote(note.id, li); // id هنمرر الملاحظه بناء على ال
+  };
+
+  li.appendChild(span);
+  li.appendChild(editNoteBtn);
+  li.appendChild(deleteNoteBtn);
+  notesList.appendChild(li);
+}
+
+async function loadNotes(userId) {
+  const { data, error } = await supabaseClient
+    .from("notes")
+    .select("*")
+    .eq("userId", userId);
+
+  if (error) {
+    alert("حدث خطأ في تحميل الملاحظات" + error.message);
+    return;
+  }
+
+  notesList.innerHTML = "";
+  for (let i = 0; i < data.length; i++) {
+    renderNote(data[i]);
+  }
+}
+
+
